@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Job Board</title>
+  <style>
+    
+    .title-logo-container {
+      display: flex;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+      .title-logo-container img {
+        margin-right: 10px;
+        max-height: 150px; 
+      }
+  </style>
+</head>
+<body>
+
+
+  <section class="vh-1 gradient-custom">
+    <div class="container py-3 h-100">
+
+
+      <div class="title-logo-container">
+
+        <img src="https://img.freepik.com/premium-vector/find-job-logo-template-design_20029-959.jpg" alt="Logo">
+
+
+        <h1 class="h3">Job Board</h1>
+      </div>
+
+
+
+    </div>
+  </section>
+
+
+
+  <div class="container mt-3">
+    <div class="row">
+      <div class="col-12 d-flex justify-content-end mb-3">
+        <label for="jobSearch">Search Jobs:</label>
+        <input type="text" id="jobSearch" class="form-control" placeholder="Enter keywords" [(ngModel)]="searchKeyword" (input)="filterByKeyword()">
+        <button (click)="handleButtonClick()">Click me</button>
+      </div>
+    </div>
+  </div>
+
+
+  <section class="vh-150 gradient-custom">
+    <div class="container py-55 h-150">
+      <div class="row">
+        <div class="col-15 text-end">
+          <button class="btn btn-sm btn-success" (click)="isListView = !isListView"> {{isListView ? 'List':'List'}}</button>
+        </div>
+      </div>
+      <div *ngIf="isListView" class="row justify-content-center align-items-center h-100">
+        <div class="col-12">
+          <table class="table table-bordered">
+  
+  
+            <thead>
+              <tr>
+                <th>ID Number</th>
+                <th>
+                  <div class="d-flex align-items-center">
+                    <span class="btn-title">Department</span>
+                    <button class="btn btn-light btn-sort" (click)="sortBy('title')">&#9650;</button>
+                  </div>
+                </th>
+                <th>
+                  <div class="d-flex align-items-center">
+                    <span class="btn-title">Company</span>
+                    <button class="btn btn-light btn-sort" (click)="sortBy('company')">&#9650;</button>
+                  </div>
+                </th>
+                <th>
+                  <div class="d-flex align-items-center">
+                    <span class="btn-title">Location</span>
+                    <button class="btn btn-light btn-sort" (click)="sortBy('location')">&#9650;</button>
+                  </div>
+                </th>
+                <th>Description</th>
+                <th>Requirements</th>
+                <th>Posted Date</th>
+                <th>Expiry Date</th>
+                <th>Application</th>
+              </tr>
+            </thead>
+  
+  
+            <tbody>
+              <tr *ngFor="let emp of employeeList; let sr= index">
+                <td>{{sr+1}}</td>
+                <td>{{emp.title }}</td>
+                <td>{{emp.company }} </td>
+                <td>{{emp.location }} </td>
+                <td>{{emp.description }}</td>
+                <td>{{emp.requirements }} </td>
+                <td>{{emp.postedDate }} </td>
+                <td>{{emp.expiryDate }} </td>
+                <td>
+                  <div *ngIf="!emp.isApplied">
+                    <button class="btn btn-sm btn-primary" (click)="onEdit(emp)">Apply</button>
+                  </div>
+                  <div *ngIf="emp.isApplied">
+                    <span>Applied</span>
+                  </div>
+                  <button class="btn btn-sm btn-danger mt-2" (click)="onIgnore(emp)">Ignore</button>
+                </td>
+  
+  
+  
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+  
+  
+      <div *ngFor="let emp of filteredEmployeeList; let sr= index">
+      
+      </div>
+  
+      <div *ngIf="!isListView" class="row justify-content-center align-items-center h-100">
+        <div class="col-12 col-lg-9 col-xl-7">
+          <div class="card shadow-2-strong card-registration" style="border-radius: 5px;">
+            <div class="card-body p-4 p-md-5">
+  
+              <h3 class="mb-4 pb-2 pb-md-0 mb-md-5">Registration Form</h3>
+  
+  
+  
+  
+              <div class="row">
+                <div class="col-md-6 mb-4">
+  
+                  <div class="form-outline">
+                    <input type="text" [(ngModel)]="employeeObject.firstName" id="firstName" class="form-control form-control-lg" />
+                    <label class="form-label" for="firstName">First Name</label>
+                  </div>
+  
+                </div>
+                <div class="col-md-6 mb-4">
+  
+                  <div class="form-outline">
+                    <input type="text" id="lastName" [(ngModel)]="employeeObject.lastName" class="form-control form-control-lg" />
+                    <label class="form-label" for="lastName">Last Name</label>
+                  </div>
+  
+                </div>
+              </div>
+  
+              <div class="row">
+                <div class="col-md-6 mb-4 d-flex align-items-center">
+  
+                  <div class="form-outline datepicker w-100">
+                    <label class="form-label" for="lastName">Skills</label>
+                    <select [(ngModel)]="employeeObject.departmentId" class="select form-control-lg">
+                      <option value="" disabled >Choose a Skillset</option>
+                      <option *ngFor="let dept of departments" [value]="dept.deptId">
+                        {{dept.deptName}}
+                      </option>
+                   
+  
+  
+                  </select>
+  
+                </div>
+  
+                </div>
+                <div class="col-md-6 mb-4">
+  
+                  <h6 class="mb-2 pb-1">Gender: </h6>
+  
+                  <div class="form-check form-check-inline">
+                    <input [(ngModel)]="employeeObject.gender" class="form-check-input" type="radio" name="gender"
+                           id="femaleGender" value="Fe-Male" checked />
+                    <label class="form-check-label" for="femaleGender">Female</label>
+                  </div>
+  
+                  <div class="form-check form-check-inline">
+                    <input [(ngModel)]="employeeObject.gender" class="form-check-input" type="radio" name="gender"
+                           id="maleGender" value="Male" />
+                    <label class="form-check-label" for="maleGender">Male</label>
+                  </div>
+                </div>
+              </div>
+  
+              <div class="row">
+                <div class="col-md-6 mb-4 pb-2">
+  
+                  <div class="form-outline">
+                    <input [(ngModel)]="employeeObject.email" type="email" id="emailAddress" class="form-control form-control-lg" />
+                    <label class="form-label" for="emailAddress">Email</label>
+                  </div>
+  
+                </div>
+                <div class="col-md-6 mb-4 pb-2">
+  
+                  <div class="form-outline">
+                    <input [(ngModel)]="employeeObject.phoneNo" type="tel" id="phoneNumber" class="form-control form-control-lg" />
+                    <label class="form-label" for="phoneNumber">Phone Number</label>
+                  </div>
+  
+                </div>
+              </div>
+              <div class="mt-4 pt-2">
+                <input class="btn btn-primary btn-lg" (click)="onCreateEmp()" type="button" value="Submit" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  
+  
+
+</body>
+</html>
+
+
+

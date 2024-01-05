@@ -1,0 +1,21 @@
+<h2 mat-dialog-title>Filtered Jobs</h2>
+<div class="container">
+      <div mat-dialog-content class="mat-dialog-container">
+        <ul>
+          <li *ngFor="let job of data.filteredJobs">
+            {{ job.title }} - {{ job.company }} - {{ job.location }}
+            <br>
+            <div>
+              <button class="btn btn-sm btn-primary" (click)="onApply()">Apply</button>
+            </div>
+            
+          </li>
+        </ul>
+      </div>
+      <div mat-dialog-actions>
+        <button mat-button (click)="onClose()">Close</button>
+      </div>
+
+      
+  </div>
+

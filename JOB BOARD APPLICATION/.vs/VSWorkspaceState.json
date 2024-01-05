@@ -1,0 +1,12 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\src",
+    "\\src\\app",
+    "\\src\\app\\pages",
+    "\\src\\app\\pages\\employee-registration",
+    "\\src\\assets"
+  ],
+  "SelectedNode": "\\src\\app\\pages\\employee-registration\\employee-registration.component.html",
+  "PreviewInSolutionExplorer": false
+}

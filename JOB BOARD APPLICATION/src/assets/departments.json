@@ -1,0 +1,76 @@
+{
+  "data": [
+    {
+      "deptId": 1,
+      "deptName": "Engineering",
+      "deptDescription": "Responsible for developing and maintaining software solutions.",
+      "jobs": [ 1, 5, 7 ]
+    },
+    {
+      "deptId": 2,
+      "deptName": "Design",
+      "deptDescription": "Focuses on creating user-centric and visually appealing interfaces.",
+      "jobs": [ 2, 10, 12 ]
+    },
+    {
+      "deptId": 3,
+      "deptName": "Marketing",
+      "deptDescription": "Develops and executes marketing strategies to promote products globally.",
+      "jobs": [ 3, 11 ]
+    },
+    {
+      "deptId": 4,
+      "deptName": "Data Science",
+      "deptDescription": "Works on cutting-edge projects in the field of data analytics.",
+      "jobs": [ 4 ]
+    },
+    {
+      "deptId": 5,
+      "deptName": "Sales",
+      "deptDescription": "Focuses on building relationships, meeting targets, and driving business growth.",
+      "jobs": [ 6 ]
+    },
+    {
+      "deptId": 6,
+      "deptName": "Network Engineering",
+      "deptDescription": "Designs, implements, and maintains network infrastructure.",
+      "jobs": [ 7 ]
+    },
+    {
+      "deptId": 7,
+      "deptName": "Human Resources",
+      "deptDescription": "Leads the human resources department, fostering a positive workplace culture.",
+      "jobs": [ 8 ]
+    },
+    {
+      "deptId": 8,
+      "deptName": "Innovation",
+      "deptDescription": "Focuses on product development and delivering exceptional products.",
+      "jobs": [ 9 ]
+    },
+    {
+      "deptId": 9,
+      "deptName": "Content Creation",
+      "deptDescription": "Creates engaging and informative content across various platforms.",
+      "jobs": [ 12 ]
+    },
+    {
+      "deptId": 10,
+      "deptName": "IT Support",
+      "deptDescription": "Provides technical support for hardware and software issues.",
+      "jobs": [ 13 ]
+    },
+    {
+      "deptId": 11,
+      "deptName": "Healthcare Administration",
+      "deptDescription": "Manages administrative tasks to ensure the smooth operation of healthcare services.",
+      "jobs": [ 14 ]
+    },
+    {
+      "deptId": 12,
+      "deptName": "Quality Assurance",
+      "deptDescription": "Ensures product quality through testing and quality assurance.",
+      "jobs": [ 15 ]
+    }
+  ]
+}

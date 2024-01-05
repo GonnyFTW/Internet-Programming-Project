@@ -1,0 +1,23 @@
+
+.btn-sort {
+  margin-left: 5px; 
+}
+
+  .btn-sort.active {
+    color: #007bff; 
+  }
+
+
+.apply-button-container {
+  margin-bottom: 20px;
+}
+
+.btn-apply {
+  margin-right: 5px; 
+}
+
+
+.btn-department-filter {
+  margin-right: 5px; 
+}
+
