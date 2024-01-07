@@ -2,6 +2,10 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { FilteredJobsDialogComponent } from '../filtered-jobs-dialog/filtered-jobs-dialog.component';
+import { NotificationService } from '../../NotificationService';
+import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { RegistrationFormDialogComponent } from '../registration-form-dialog-component/registration-form-dialog-component';
 
 
 
@@ -34,7 +38,7 @@ export class EmployeeRegistrationComponent implements OnInit {
   sortOrder: string = 'asc';
   filteredEmployeeList: any[] | undefined;
 
-  constructor(private http: HttpClient, public dialog: MatDialog) { }
+  constructor(private http: HttpClient, public dialog: MatDialog, private notificationService: NotificationService, private router: Router, private snackBar: MatSnackBar) { }
 
   onIgnore(item: any) {
     // Assuming `employeeList` is an array of jobs
@@ -69,17 +73,30 @@ export class EmployeeRegistrationComponent implements OnInit {
   }
 
   onApply(item: any) {
-    this.employeeObject = item;
-    this.isListView = false;
-  
-  }
+  const dialogRef = this.dialog.open(RegistrationFormDialogComponent, {
+    width: '400px',
+    data: { job: item },
+  });
 
-  updateAppliedStatus() {
-    const appliedJobId = this.employeeObject.id;
+  dialogRef.componentInstance.submitClicked.subscribe(() => {
+    this.updateAppliedStatus(item);
+    this.notificationService.showSuccessMessage(`You have applied for ${item.title}`);
+  });
+
+  dialogRef.afterClosed().subscribe(() => {
+    // Other actions after the dialog is closed
+  });
+}
+
+
+
+
+  updateAppliedStatus(item: any) {
+    const appliedJobId = item.id; // Use item.id instead of this.employeeObject.id
 
     const appliedJob = this.employeeList.find(job => job.id === appliedJobId);
     if (appliedJob) {
-      appliedJob.applied = true;
+      appliedJob.isApplied = true; // Update the isApplied property
     }
 
     this.isListView = true;
@@ -88,24 +105,60 @@ export class EmployeeRegistrationComponent implements OnInit {
 
 
   onCreateEmp() {
-    this.http.get("assets/postEmployee.json").subscribe((res: any) => {
-      alert(res.message);
-      this.loadEmployees();
-      this.employeeObject.isApplied = true;
-  
+    // Simulating the creation of an employee (replace this with your actual logic)
+    const newEmployee = {
+      id: 'NEW_ID',  // Generate a unique ID for the new employee
+      title: this.employeeObject.title,  // Assuming title is one of the properties you want to include
+      // ... other employee details
+    };
+
+    // Add the new employee to the list (replace this with the actual logic)
+    this.employeeList.push(newEmployee);
+
+    // Display a notification message using MatSnackBar
+    const snackBarRef = this.snackBar.open('You have applied for ' + newEmployee.title, 'Close', {
+      duration: 3000,  // Adjust the duration as needed
+    });
+
+    // Use setTimeout to navigate after a short delay
+    setTimeout(() => {
+      // Navigate back to the main page
+      this.router.navigate(['/']);  // Adjust the route if needed
+    }, 4000);  // Adjust the delay as needed (ensure it's longer than the MatSnackBar duration)
+  }
+
+
+
+
+
+
+
+
+
+  onEdit(item: any) {
+    // Open the registration form dialog
+    const dialogRef = this.dialog.open(RegistrationFormDialogComponent, {
+      width: '400px',
+      data: { job: item },
+    });
+
+    dialogRef.componentInstance.submitClicked.subscribe(() => {
+      // Update the applied status in the original list
+      this.employeeList.forEach(emp => {
+        if (emp.id === item.id) {
+          emp.isApplied = true;
+        }
+      });
+
+      this.isListView = false; // Assuming you want to switch to a different view after applying
+      this.notificationService.showSuccessMessage(`You have applied for ${item.title}`);
+    });
+
+    dialogRef.afterClosed().subscribe(() => {
+      // Other actions after the dialog is closed
     });
   }
 
-  onEdit(item: any) {
-    this.employeeObject = item;
-    this.employeeList.forEach(emp => {
-      if (emp.id === item.id) {
-        emp.applied = true;
-      }
-    });
-    this.isListView = false;
-    
-  }
 
   onDelete(item: any) {
     // Your delete logic here

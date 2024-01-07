@@ -20,17 +20,28 @@
 </head>
 <body>
 
+  <nav>
+    <ul>
+      <li><a routerLink="/">Home</a></li>
+      <li><a routerLink="/about-us">About Us</a></li>
+      <li><a routerLink="/notification">Notification</a></li>
+    </ul>
+  </nav>
+
+ 
+  <router-outlet></router-outlet>
+
 
   <section class="vh-1 gradient-custom">
     <div class="container py-3 h-100">
 
 
       <div class="title-logo-container">
+         <a href="http://localhost:4200/">
+          <img src="https://img.freepik.com/premium-vector/find-job-logo-template-design_20029-959.jpg" alt="Logo">
 
-        <img src="https://img.freepik.com/premium-vector/find-job-logo-template-design_20029-959.jpg" alt="Logo">
-
-
-        <h1 class="h3">Job Board</h1>
+         </a>
+          <h1 class="h3">Job Board</h1>
       </div>
 
 
@@ -61,8 +72,8 @@
       <div *ngIf="isListView" class="row justify-content-center align-items-center h-100">
         <div class="col-12">
           <table class="table table-bordered">
-  
-  
+
+
             <thead>
               <tr>
                 <th>ID Number</th>
@@ -91,8 +102,8 @@
                 <th>Application</th>
               </tr>
             </thead>
-  
-  
+
+
             <tbody>
               <tr *ngFor="let emp of employeeList; let sr= index">
                 <td>{{sr+1}}</td>
@@ -103,6 +114,8 @@
                 <td>{{emp.requirements }} </td>
                 <td>{{emp.postedDate }} </td>
                 <td>{{emp.expiryDate }} </td>
+                <!-- Update the Apply button rendering -->
+                <!-- Update the Apply button rendering -->
                 <td>
                   <div *ngIf="!emp.isApplied">
                     <button class="btn btn-sm btn-primary" (click)="onEdit(emp)">Apply</button>
@@ -112,77 +125,79 @@
                   </div>
                   <button class="btn btn-sm btn-danger mt-2" (click)="onIgnore(emp)">Ignore</button>
                 </td>
-  
-  
-  
+
+
+
+
+
               </tr>
             </tbody>
           </table>
         </div>
       </div>
-  
-  
+
+
       <div *ngFor="let emp of filteredEmployeeList; let sr= index">
-      
+
       </div>
-  
+
       <div *ngIf="!isListView" class="row justify-content-center align-items-center h-100">
         <div class="col-12 col-lg-9 col-xl-7">
           <div class="card shadow-2-strong card-registration" style="border-radius: 5px;">
             <div class="card-body p-4 p-md-5">
-  
+
               <h3 class="mb-4 pb-2 pb-md-0 mb-md-5">Registration Form</h3>
-  
-  
-  
-  
+
+
+
+
               <div class="row">
                 <div class="col-md-6 mb-4">
-  
+
                   <div class="form-outline">
                     <input type="text" [(ngModel)]="employeeObject.firstName" id="firstName" class="form-control form-control-lg" />
                     <label class="form-label" for="firstName">First Name</label>
                   </div>
-  
+
                 </div>
                 <div class="col-md-6 mb-4">
-  
+
                   <div class="form-outline">
                     <input type="text" id="lastName" [(ngModel)]="employeeObject.lastName" class="form-control form-control-lg" />
                     <label class="form-label" for="lastName">Last Name</label>
                   </div>
-  
+
                 </div>
               </div>
-  
+
               <div class="row">
                 <div class="col-md-6 mb-4 d-flex align-items-center">
-  
+
                   <div class="form-outline datepicker w-100">
                     <label class="form-label" for="lastName">Skills</label>
                     <select [(ngModel)]="employeeObject.departmentId" class="select form-control-lg">
-                      <option value="" disabled >Choose a Skillset</option>
+                      <option value="" disabled>Choose a Skillset</option>
                       <option *ngFor="let dept of departments" [value]="dept.deptId">
                         {{dept.deptName}}
                       </option>
-                   
-  
-  
-                  </select>
-  
-                </div>
-  
+
+
+
+                    </select>
+
+                  </div>
+
                 </div>
                 <div class="col-md-6 mb-4">
-  
+
                   <h6 class="mb-2 pb-1">Gender: </h6>
-  
+
                   <div class="form-check form-check-inline">
                     <input [(ngModel)]="employeeObject.gender" class="form-check-input" type="radio" name="gender"
                            id="femaleGender" value="Fe-Male" checked />
                     <label class="form-check-label" for="femaleGender">Female</label>
                   </div>
-  
+
                   <div class="form-check form-check-inline">
                     <input [(ngModel)]="employeeObject.gender" class="form-check-input" type="radio" name="gender"
                            id="maleGender" value="Male" />
@@ -190,27 +205,27 @@
                   </div>
                 </div>
               </div>
-  
+
               <div class="row">
                 <div class="col-md-6 mb-4 pb-2">
-  
+
                   <div class="form-outline">
                     <input [(ngModel)]="employeeObject.email" type="email" id="emailAddress" class="form-control form-control-lg" />
                     <label class="form-label" for="emailAddress">Email</label>
                   </div>
-  
+
                 </div>
                 <div class="col-md-6 mb-4 pb-2">
-  
+
                   <div class="form-outline">
                     <input [(ngModel)]="employeeObject.phoneNo" type="tel" id="phoneNumber" class="form-control form-control-lg" />
                     <label class="form-label" for="phoneNumber">Phone Number</label>
                   </div>
-  
+
                 </div>
               </div>
               <div class="mt-4 pt-2">
-                <input class="btn btn-primary btn-lg" (click)="onCreateEmp()" type="button" value="Submit" />
+                <button class="btn btn-sm btn-light" (click)="isListView = !isListView"> {{isListView ? 'Submit':'Submit'}}</button>
               </div>
             </div>
           </div>
@@ -218,9 +233,9 @@
       </div>
     </div>
   </section>
-  
-  
-  
+
+
+
 
 </body>
 </html>

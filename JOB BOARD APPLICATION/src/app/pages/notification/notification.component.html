@@ -1,0 +1,11 @@
+<div class="notification-container">
+  <div class="notification-header">Applied Jobs History</div>
+  <ul class="notification-list">
+    <li *ngFor="let job of appliedJobs" class="notification-item">
+      <h3>{{ job }}</h3>
+      <!-- Add other job details as needed -->
+      <!-- Remove the 'View Details' part if not needed -->
+      <p class="view-details" (click)="viewJobDetails(job)">View Details</p>
+    </li>
+  </ul>
+</div>
